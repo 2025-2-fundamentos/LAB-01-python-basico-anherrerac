@@ -26,3 +26,36 @@ def pregunta_06():
      ('jjj', 5, 17)]
 
     """
+
+    ruta = "files/input/data.csv"
+    stats = {}
+    with open(ruta, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.rstrip("\n")
+            if not line:
+                continue
+            parts = line.split("\t")
+            if len(parts) < 5:
+                continue
+            dict_field = parts[4]
+            for pair in dict_field.split(","):
+                if not pair:
+                    continue
+                if ":" not in pair:
+                    continue
+                key, val_str = pair.split(":", 1)
+                key = key.strip()
+                try:
+                    val = int(val_str.strip())
+                except ValueError:
+                    continue
+                if key in stats:
+                    cur_min, cur_max = stats[key]
+                    if val < cur_min:
+                        cur_min = val
+                    if val > cur_max:
+                        cur_max = val
+                    stats[key] = (cur_min, cur_max)
+                else:
+                    stats[key] = (val, val)
+    return [(k, stats[k][0], stats[k][1]) for k in sorted(stats.keys())]

@@ -15,3 +15,20 @@ def pregunta_05():
     [('A', 9, 2), ('B', 9, 1), ('C', 9, 0), ('D', 8, 3), ('E', 9, 1)]
 
     """
+    path = "files/input/data.csv"
+    groups = {}
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            key = parts[0]
+            value = int(parts[1])
+            groups.setdefault(key, []).append(value)
+
+    result = []
+    for key in sorted(groups.keys()):
+        values = groups[key]
+        result.append((key, max(values), min(values)))
+    return result

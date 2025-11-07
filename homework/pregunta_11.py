@@ -16,3 +16,24 @@ def pregunta_11():
 
 
     """
+
+
+    path = "files/input/data.csv"
+    sums = {}
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            if len(parts) == 1:
+                parts = line.split(",")
+            try:
+                value = int(parts[1])
+            except (IndexError, ValueError):
+                continue
+            col4 = parts[3]
+            letters = col4.split(",")
+            for letter in letters:
+                sums[letter] = sums.get(letter, 0) + value
+    return dict(sorted(sums.items()))

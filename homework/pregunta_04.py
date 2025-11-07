@@ -24,5 +24,22 @@ def pregunta_04():
      ('10', 2),
      ('11', 2),
      ('12', 3)]
-
     """
+    counts = {}
+    with open("files/input/data.csv", "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            if len(parts) < 3:
+                continue
+            date = parts[2]
+            parts_date = date.split("-")
+            if len(parts_date) < 2:
+                continue
+            month = parts_date[1].zfill(2)
+            counts[month] = counts.get(month, 0) + 1
+
+    months_sorted = sorted(counts.keys(), key=lambda x: int(x))
+    return [(m, counts[m]) for m in months_sorted]

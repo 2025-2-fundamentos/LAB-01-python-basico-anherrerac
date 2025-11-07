@@ -15,3 +15,20 @@ def pregunta_03():
     [('A', 53), ('B', 36), ('C', 27), ('D', 31), ('E', 67)]
 
     """
+    path = "files/input/data.csv"
+    sums = {}
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            if len(parts) == 1:
+                parts = line.split(",")
+            key = parts[0]
+            try:
+                value = int(parts[1])
+            except (IndexError, ValueError):
+                continue
+            sums[key] = sums.get(key, 0) + value
+    return sorted(sums.items())

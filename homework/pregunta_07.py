@@ -25,3 +25,22 @@ def pregunta_07():
      (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
 
     """
+
+    path = "files/input/data.csv"
+    mapping = {}
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            key = int(parts[1])
+            value = parts[0]
+            if key not in mapping:
+                mapping[key] = []
+            mapping[key].append(value)
+
+    result = []
+    for key in sorted(mapping.keys()):
+        result.append((key, mapping[key]))
+    return result

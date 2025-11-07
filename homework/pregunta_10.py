@@ -20,3 +20,19 @@ def pregunta_10():
 
 
     """
+
+    path = "files/input/data.csv"
+    result = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            key = parts[0]
+            col4 = parts[3]
+            col5 = parts[4]
+            count_col4 = len(col4.split(","))
+            count_col5 = len(col5.split(","))
+            result.append((key, count_col4, count_col5))
+    return result
